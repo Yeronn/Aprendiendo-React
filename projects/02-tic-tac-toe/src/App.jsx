@@ -1,11 +1,12 @@
 import { useState } from "react"
 import confetti from "canvas-confetti"
 import { Square } from "./assets/components/Square"
-import { TURNS, WINNER_COMBOS } from "./assets/constants"
+import { TURNS } from "./assets/constants"
 import { checkWinnerFrom, checkEndGame } from "./assets/logic/board"
 import { WinnerModal } from "./assets/components/WinnerModal.jsx"
 import { saveGameToStorage, resetGameStorage } from "./assets/logic/storage"
-function App() {
+
+function App () {
   
   const [board, setBoard] = useState(()=>{
     const boardFromStorage = window.localStorage.getItem('board')
