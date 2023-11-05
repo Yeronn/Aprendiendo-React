@@ -1,14 +1,13 @@
-import { useState } from "react"
-import confetti from "canvas-confetti"
-import { Square } from "./assets/components/Square"
-import { TURNS } from "./assets/constants"
-import { checkWinnerFrom, checkEndGame } from "./assets/logic/board"
-import { WinnerModal } from "./assets/components/WinnerModal.jsx"
-import { saveGameToStorage, resetGameStorage } from "./assets/logic/storage"
+import { useState } from 'react'
+import confetti from 'canvas-confetti'
+import { Square } from './assets/components/Square'
+import { TURNS } from './assets/constants'
+import { checkWinnerFrom, checkEndGame } from './assets/logic/board'
+import { WinnerModal } from './assets/components/WinnerModal.jsx'
+import { saveGameToStorage, resetGameStorage } from './assets/logic/storage'
 
 function App () {
-  
-  const [board, setBoard] = useState(()=>{
+  const [board, setBoard] = useState(() => {
     const boardFromStorage = window.localStorage.getItem('board')
     return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)
   }
@@ -19,7 +18,7 @@ function App () {
     return turnFromStorage ?? TURNS.X
   })
 
-  //null es que no hay ganador, false es que hay un empate
+  // null es que no hay ganador, false es que hay un empate
   const [winner, setWinner] = useState(null)
 
   const resetGame = () => {
@@ -37,33 +36,31 @@ function App () {
     const newBoard = [...board]
     newBoard[index] = turn
     setBoard(newBoard)
-    
+
     // cambiar el turno
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
 
-    //guardar datos en local storage
-    saveGameToStorage({board : newBoard, turn: newTurn})
-
+    // guardar datos en local storage
+    saveGameToStorage({ board: newBoard, turn: newTurn })
 
     const newWinner = checkWinnerFrom(newBoard)
-    if (newWinner){
+    if (newWinner) {
       confetti()
       setWinner(newWinner)
-    } 
-    else if (checkEndGame(newBoard)){
-      setWinner(false) //empate
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false) // empate
     }
   }
 
   return (
-    <main className="board">
+    <main className='board'>
       <h1>Tic Tac Toe</h1>
       <button onClick={resetGame}>Reset del juego</button>
-      <section className="game">
+      <section className='game'>
         {
           board.map((square, index) => {
-            return(
+            return (
               <Square
                 key={index}
                 index={index}
@@ -76,7 +73,7 @@ function App () {
         }
       </section>
 
-      <section className="turn">
+      <section className='turn'>
         <Square isSelected={turn === TURNS.X}>
           {TURNS.X}
         </Square>
